@@ -486,8 +486,6 @@ var Select = _react2['default'].createClass({
 		autofocus: _react2['default'].PropTypes.bool, // autofocus the component on mount
 		autosize: _react2['default'].PropTypes.bool, // whether to enable autosizing or not
 		backspaceRemoves: _react2['default'].PropTypes.bool, // whether backspace removes an item if there is no text input
-		backspaceToRemoveMessage: _react2['default'].PropTypes.string, // Message to use for screenreaders to press backspace to remove the current item -
-		// {label} is replaced with the item label
 		className: _react2['default'].PropTypes.string, // className for the outer element
 		clearAllText: stringOrNode, // title for the "clear" control when multi: true
 		clearValueText: stringOrNode, // title for the "clear" control
@@ -555,7 +553,6 @@ var Select = _react2['default'].createClass({
 			autosize: true,
 			allowCreate: false,
 			backspaceRemoves: true,
-			backspaceToRemoveMessage: 'Press backspace to remove {label}',
 			clearable: true,
 			clearAllText: 'Clear all',
 			clearValueText: 'Clear value',
@@ -1502,15 +1499,6 @@ var Select = _react2['default'].createClass({
 			'has-value': valueArray.length
 		});
 
-		var removeMessage = null;
-		if (this.props.multi && !this.props.disabled && valueArray.length && !this.state.inputValue && this.state.isFocused && this.props.backspaceRemoves) {
-			removeMessage = _react2['default'].createElement(
-				'span',
-				{ id: this._instancePrefix + '-backspace-remove-message', className: 'Select-aria-only', 'aria-live': 'assertive' },
-				this.props.backspaceToRemoveMessage.replace('{label}', valueArray[valueArray.length - 1][this.props.labelKey])
-			);
-		}
-
 		return _react2['default'].createElement(
 			'div',
 			{ ref: 'wrapper',
@@ -1533,7 +1521,6 @@ var Select = _react2['default'].createClass({
 					this.renderValue(valueArray, isOpen),
 					this.renderInput(valueArray, focusedOptionIndex)
 				),
-				removeMessage,
 				this.renderLoading(),
 				this.renderClear(),
 				this.renderArrow()
